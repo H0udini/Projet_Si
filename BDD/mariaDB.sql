@@ -8,7 +8,6 @@ delete * from T_COMPTE;
 delete * from T_NIVEAUX_APPRENTISSAGE;
 delete * from T_COMPTE_TYPE;
 
-
 drop table IF EXISTS T_COMPTE_FORMATION;
 drop table IF EXISTS T_COMPTE_MODULE;
 drop table IF EXISTS T_MODULE;
