@@ -1,8 +1,4 @@
 # Projet_Si
 
 # MariaDB
-Database Name : zfm1-zprigengu
-
-Database Username : zprigengu
-
-Database Password : xcp7x4tm
+https://discordapp.com/channels/664412967856766978/664412968993161218
