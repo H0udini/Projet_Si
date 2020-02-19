@@ -1,3 +1,5 @@
+/*---------------Création Base de données---------------*/
+
 delete * from T_COMPTE_FORMATION;
 delete * from T_COMPTE_MODULE;
 delete * from T_MODULE;
@@ -32,13 +34,14 @@ create table T_COMPTE_TYPE (
 
 create table T_FORMATION (
   formation_id integer NOT NULL,
-  formation_nom varchar(64) NOT NULL
+  formation_nom varchar(64) NOT NULL,
+  formation_description varchar(128)
 ) CHARACTER SET utf8 ;
 
 create table T_MODULE (
 	mod_id integer NOT NULL,
 	mod_nom varchar(64) NOT NULL,
-	mod_description varchar(64) NOT NULL,
+	mod_description varchar(64),
 	mod_id_referent varchar(64) NOT NULL
 ) CHARACTER SET utf8;
 
@@ -84,3 +87,9 @@ ALTER TABLE T_COMPTE_MODULE ADD CONSTRAINT CPT_MOD_UNIQUE UNIQUE (cpt_id,mod_id)
 ALTER TABLE T_COMPTE_FORMATION ADD FOREIGN KEY (cpt_id) REFERENCES T_COMPTE(cpt_id);
 ALTER TABLE T_COMPTE_FORMATION ADD FOREIGN KEY (formation_id) REFERENCES T_FORMATION(formation_id);
 ALTER TABLE T_COMPTE_FORMATION ADD CONSTRAINT CPT_FORM_UNIQUE UNIQUE (cpt_id,formation_id);
+
+
+
+/*---------------Jeux de données---------------*/
+
+INSERT INTO T_FORMATION 
