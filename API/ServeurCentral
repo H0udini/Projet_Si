@@ -2,8 +2,8 @@ const express = require('express');
 const body = require('body-parser');
 const cors = require('cors');
 
-let mariaDB = "obiwan2.univ-brest.fr:8017/";
-let mongo = "obiwan2.univ-brest.fr:8018/";
+let mariaDB = "obiwan2.univ-brest.fr:8116/";
+let mongo = "obiwan2.univ-brest.fr:8216/";
 
 let port = 8016;
 
