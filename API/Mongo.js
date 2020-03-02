@@ -11,8 +11,8 @@ app.use(body());
 
 mongoose.connect('mongodb://localhost:27017/M1_TYBAG_mongo', {useNewUrlParser: true});
 
-app.get('/:', async (req, res) => {
-    const  = req.params.; // on récupère la valeure dans l'url
+app.get('/id_formation/:nomCours:', async (req, res) => {
+    const id = req.params.id; // on récupère la valeure dans l'url
     const  = await Gare.findOne({_ : });
     res.json(gare)
  
