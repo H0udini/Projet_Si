@@ -4,6 +4,7 @@ const cors = require('cors');
 
 let mariaDB = "obiwan2.univ-brest.fr:8116/";
 let mongo = "obiwan2.univ-brest.fr:8216/";
+let neo4j = "obiwan2.univ-brest.fr:8236/";
 
 let port = 8016;
 
