@@ -9,13 +9,39 @@ let port = 8016;
 
 let session = driver.session();
 session
-    .run('MATCH (pers:Person {name : "Toto"}) RETURN pers.name AS nom')
+.beginTransaction()
+  .pipe(
+    flatMap(txc =>
+      concat(
+        txc
+          .run(
+             'MATCH (i:TYBAG_MODULES {id_formation : 1}) RETURN i AS identifiant'
+          )
+          .records()
+          .pipe(map(r => r.get('name'))),
+        of('First query completed'),
+        txc
+          .run(
+            'MERGE (adam:Person {name: $nameParam}) RETURN adam.name AS name',
+            {
+              nameParam: 'Adam'
+            }
+          )
+          .records()
+          .pipe(map(r => r.get('name'))),
+        of('Second query completed'),
+        txc.commit(),
+        of('committed')
+      ).pipe(catchError(err => txc.rollback().pipe(throwError(err))))
+    )
+  )
+
     .subscribe({
       onKeys: keys => {
         console.log(keys);
       },
       onNext: record => {
-        console.log(record.get('nom'))
+        console.log(record.get('identifiant'))
       },
       onCompleted: () => {
         session.close()
