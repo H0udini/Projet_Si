@@ -22,10 +22,7 @@ session
         of('First query completed'),
         txc
           .run(
-            'MERGE (adam:Person {name: $nameParam}) RETURN adam.name AS name',
-            {
-              nameParam: 'Adam'
-            }
+            'MATCH (i1:TYBAG_FORMATIONS{id_formation: 1}) -[:NECESSITE]->(i2
           )
           .records()
           .pipe(map(r => r.get('name'))),
