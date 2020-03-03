@@ -27,6 +27,16 @@ app.get('/Formations', async (req, res) => {
     connection.end();
 })
 
+app.get('/:id_module', async (req, res) => {
+    const id_module = req.param.id_module;
+    connection.connect();
+    connection.query('SELECT nom_module, description_module FROM t_module Where id_module = +id_module, function (error, results, fields) {
+        if (error) throw error;   
+        res.json(results);   
+    })
+    connection.end();
+})
+
 app.listen(port, () => {
     console.log("Serveur MariaDB On");
 })
