@@ -20,7 +20,7 @@ app.use(cors());
 
 app.get('/Formations', async (req, res) => {
     connection.connect();
-    connection.query('SELECT nom_formation, description_formation FROM t_formation', function (error, results, fields) {
+    connection.query('SELECT id_formation, nom_formation, description_formation FROM t_formation', function (error, results, fields) {
         if (error) throw error;   
         res.json(results);   
     })
