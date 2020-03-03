@@ -18,10 +18,9 @@ let port = 8016;
 app.use(body());
 app.use(cors());
 
-app.get('/:nom', async (req, res) => {
-    const nom = req.params.nom;
+app.get('/Formations', async (req, res) => {
     connection.connect();
-    connection.query('SELECT id_formation FROM t_formation where nom_formation = '+nom , function (error, results, fields) {
+    connection.query('SELECT nom_formation, description_formation FROM t_formation, function (error, results, fields) {
         if (error) throw error;   
         res.json(results);   
     })
