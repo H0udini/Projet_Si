@@ -10,7 +10,10 @@ let port = 8016;
 let session = driver.session();
 session
     .run(
-       'MATCH (f:TYBAG_FORMATIONS {id_formation : 1}), (m1:TYBAG_MODULES(id_module:5}),(m1)-[:NECESSITE]->(m2:TYBAG_MODULES), (f)-[:NECESSITE]->(m2) RETURN m2 AS identifiant'
+        'MATCH (f:TYBAG_FORMATIONS {id_formation : 1}), (m1:TYBAG_MODULES(id_module:5}),(m1)-[:NECESSITE]->(m2:TYBAG_MODULES), (f)-[:NECESSITE]->(m2) RETURN m2 AS identifiant';
+    )
+    .run(
+        'MATCH (f:TYBAG_FORMATIONS  {id_formation : 1})-[:CONTIENT]->(m:TYBAG_MODULES) return m AS je_sais_pas;
     )
     .subscribe({
       onKeys: keys => {
@@ -18,6 +21,9 @@ session
       },
       onNext: record => {
         console.log(record.get('identifiant'))
+      },
+      onNext: record => {
+        console.log(record.get('je_sais_pas'))
       },
       onCompleted: () => {
         session.close()
