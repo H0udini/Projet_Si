@@ -13,12 +13,11 @@ let app = express();
 app.use(body());
 app.use(cors());
 
-app.get('/:nom/:code', async(req, res) => {
-    const nom = req.param.nom;
-    const code = req.param.code;
-    fetch(mongo + nom + "/" + code)
+app.get('/:id_formation', async(req, res) => {
+    const id = req.param.id;
+    fetch(mongo + id)
     .then(function(response) {
-        res.json(mariaDB + response.id_train);
+        res.json(mariaDB + id);
     })
 });
 
