@@ -9,30 +9,9 @@ let port = 8016;
 
 let session = driver.session();
 session
-.beginTransaction()
-  .pipe(
-    flatMap(txc =>
-      concat(
-        txc
-          .run(
-             'MATCH (i:TYBAG_MODULES {id_formation : 1}) RETURN i AS identifiant'
-          )
-          .records()
-          .pipe(map(r => r.get('name'))),
-        of('First query completed'),
-        txc
-          .run(
-            'MATCH (i1:TYBAG_FORMATIONS{id_formation: 1}) -[:NECESSITE]->(i2
-          )
-          .records()
-          .pipe(map(r => r.get('name'))),
-        of('Second query completed'),
-        txc.commit(),
-        of('committed')
-      ).pipe(catchError(err => txc.rollback().pipe(throwError(err))))
+    .run(
+       'MATCH (f:TYBAG_FORMATIONS {id_formation : 1}), (m1:TYBAG_MODULES(id_module:5}),(m1)-[:NECESSITE]->(m2:TYBAG_MODULES), (f)-[:NECESSITE]->(m2) RETURN m2 AS identifiant'
     )
-  )
-
     .subscribe({
       onKeys: keys => {
         console.log(keys);
