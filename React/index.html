@@ -4,6 +4,7 @@
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <link rel = "stylesheet" type = "text/css" href = "style.css" />
 
 </head>
 
@@ -11,23 +12,86 @@
     <div id="root"></div>
 
     <script type='text/babel'>
-        class FormationForm extends React.Component {
+
+        class Page extends React.Component {
+
             constructor(props) {
                 super(props);
                 this.state = {
-                    value: '',
-                    error: null,
-                    isLoaded: false,
-                    retour: "debut"
-                };
-
-                this.handleChange = this.handleChange.bind(this);
-                this.handleSubmit = this.handleSubmit.bind(this);
+                    valeurs: [
+                        {
+                            titre:"test1",
+                            des:"desc1",
+                        },
+                        {
+                            titre:"test2",
+                            des:"desc2",
+                        },
+                    ],
+                    old: [],
+                    profondeur: 1
+                }
             }
 
-            handleChange(event) {
-                this.setState({value: event.target.value});
+            selectFormation() {
+
+                switch (this.state.profondeur) {
+                    case 1:
+                        this.setState(
+                            {
+                                old: this.state.old.concat(this.state.valeurs),
+                                valeurs: [
+                                    {
+                                        titre:"module1",
+                                        des:"desc1",
+                                    },
+                                    {
+                                        titre:"module2",
+                                        des:"desc2",
+                                    },
+                                ],
+                                profondeur: this.state.profondeur + 1
+                            }
+                        );
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                }
+
+                
             }
+
+            render() {
+                return(
+                    this.state.valeurs.map((elem) => <div onClick={() => this.selectFormation()}>
+                    <Zone  titre={elem.titre} desc={elem.des} /></div>)
+
+                    /*if(this.state.old) {
+                        <button
+                    }*/
+                );
+            }
+        }
+
+        class Zone extends React.Component {
+            
+            constructor(props) {
+                super(props);
+            }
+
+            render() {
+                return(<div className="zone">
+                            <h1>{this.props.titre}</h1>
+                            <div className="text">{this.props.desc}</div>
+                        </div>
+                );
+            }
+
+        }
+
+        /*
 
             handleSubmit(event) {
 
@@ -55,21 +119,9 @@
 
             }
 
-            render() {
-                return (
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        nom de la formation :
-                        <input type="text" value={this.state.value} onChange={this.handleChange} />
-                    </label>
-                    <br />
-                    <input type="submit" value="Recherche" />
-                </form>
-                );
-            }
-        }
+          */
 
-        ReactDOM.render(<FormationForm />, document.getElementById('root'));
+        ReactDOM.render(<Page />, document.getElementById('root'));
     </script>
 </body>
 </html>
