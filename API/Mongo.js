@@ -1,31 +1,42 @@
-
 const mongoose = require('mongoose');
 const express = require('express');
 const body = require('body-parser');
 
 let app = express();
-let port = 8216;
+let port = 8016;
 
 app.use(body());
 
 mongoose.connect('mongodb://localhost:27017/M1_TYBAG_mongo', {useNewUrlParser: true});
 
+const schema  = mongoose.Schema({
+    date : Date,
+    requete : String,
+    idUsr : Number
+})
+
+
+module.exports = mongoose.model('logs', schema);
+
 app.post('/Projet', async(req, res) => {
-	const date = req.body.date; // récupération des variables du body
- 
-    if (!date ) { 
-        res.send('Il manque un argument')
-        return
+    const requete = req.body.requete;
+    const idUsr = req.body.idUsr;
+
+    if (idUsr == null) {
+        idUsr=(-1);
     }
- 
-    const nouveau_projet = new Projet({ // création d'un objet représentant notre nouveau livre
-        date : Date
+
+    const nvLog = new log({ // création d'un objet représentant notre log
+        date : Date()
+        action : String
+        idUsr : idUsr
     })
      
-    await nouveau_projet.save() // sauvegarde asynchrone du nouveau livre
-    res.json(nouveau_projet)
+    await nvLog.save() // sauvegarde asynchrone du log
+    res.json(nvLog)
     return
 })
+
 
 app.get('/', async (req, res) => {
     const logs = await db.logs.find({});
