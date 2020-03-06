@@ -5,7 +5,7 @@ let driver = neo4j.driver("bolt://obiwan2.univ-brest.fr:7687")
 
 let app = express();
 app.use(cors());
-let port = 8016;
+let port = 8316;
 
 let session = driver.session();
 session
