@@ -18,7 +18,8 @@
             constructor(props) {
                 super(props);
                 this.state = {
-                    valeurs: [
+                    valeurs: [],
+                    /*[
                         {
                             titre:"test1",
                             des:"desc1",
@@ -27,20 +28,30 @@
                             titre:"test2",
                             des:"desc2",
                         },
-                    ],
+                    ],*/
                     old: [],
                     profondeur: 1
                 }
             }
 
-            selectFormation() {
+            componentDidMount() {
+                    fetch("http://obiwan2.univ-brest.fr:8016/Formations")
+                    .then(res => res.json())
+                    .then(json => json.map(elem => this.setState({valeurs: this.state.valeurs.concat({id: elem.id, titre: elem.nom_formation, des: elem.description_formation})})))
+            }
 
+            selectFormation(id) {
+                console.log(this.state.profondeur)
                 switch (this.state.profondeur) {
                     case 1:
+                        /*fetch("http://obiwan2.univ-brest.fr:8016/Formations")
+                        .then(res => res.json())
+                        .then(json => json.map(elem => this.setState({valeurs: this.state.valeurs.concat({id: elem.id, titre: elem.nom_formation, des: elem.description_formation})})))*/
                         this.setState(
                             {
-                                old: this.state.old.concat(this.state.valeurs),
-                                valeurs: [
+                                old: this.state.old.concat([this.state.valeurs]),
+                                valeurs:
+                                [
                                     {
                                         titre:"module1",
                                         des:"desc1",
@@ -55,22 +66,51 @@
                         );
                         break;
                     case 2:
+                        this.setState(
+                                {
+                                    old: this.state.old.concat([this.state.valeurs]),
+                                    valeurs: 
+                                    [
+                                        {
+                                            titre:"prérequis1",
+                                            des:"desc1",
+                                        },
+                                        {
+                                            titre:"prérequis2",
+                                            des:"desc2",
+                                        },
+                                    ],
+                                    profondeur: this.state.profondeur + 1
+                                }
+                            );
+                            
                         break;
-                    case 3:
-                        break;
-                }
-
-                
+                }                
             }
+
+            retour() {
+                if(this.state.profondeur > 1){     
+                    let val = this.state.old[this.state.old.length-1]
+                    let prof = this.state.profondeur - 1
+                    let valOld = this.state.old.slice(0, this.state.old.length - 1)
+                    this.setState(
+                        {
+                            valeurs: val,
+                            old: valOld,
+                            profondeur: prof
+                        }
+                    )                   
+                }   
+            }
+
 
             render() {
                 return(
-                    this.state.valeurs.map((elem) => <div onClick={() => this.selectFormation()}>
-                    <Zone  titre={elem.titre} desc={elem.des} /></div>)
-
-                    /*if(this.state.old) {
-                        <button
-                    }*/
+                    <div>
+                        {this.state.valeurs.map((elem) => <div onClick={() => this.selectFormation(elem.id)}>
+                        <Zone  titre={elem.titre} desc={elem.des} /></div>)}
+                        <button onClick={() => this.retour()}>Retour</button>
+                    </div>          
                 );
             }
         }
